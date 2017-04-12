@@ -6,7 +6,7 @@ var Client = require('azure-iot-device').Client;
 var ConnectionString = require('azure-iot-device').ConnectionString;
 var Message = require('azure-iot-device').Message;
 
-var connectionString = <Your connection string here:'HostName=*.azure-devices.cn;DeviceId=*;SharedAccessKey=*'>;
+var connectionString = 'HostName=[Your IoT Hub name].azure-devices.com;DeviceId=[Your device ID];SharedAccessKey=[Your device key]';
 var deviceId = ConnectionString.parse(connectionString).DeviceId;
 var sensorData = raspberry.getSensorData();
 
@@ -23,10 +23,10 @@ function generateRandomIncrement() {
 var deviceMetaData = {
   'ObjectType': 'DeviceInfo',
   'IsSimulatedDevice': 0,
-  'Version': raspberry.getVersion(),
+  'Version': '1.0',
   'Temperature': parseInt(sensorData.temperature),
   'Humidity': parseInt(sensorData.humidity),
-  'DeviceProperties': {'DeviceID': deviceId, 'TelemetryInterval': 1},
+  'DeviceProperties': {'DeviceID': deviceId, 'TelemetryInterval': 1, 'HubEnabledState':true},
   'Telemetry': [
     {'Name': 'Temperature', 'DisplayName': 'Temperature', 'Type': 'double'},
     {'Name': 'Humidity', 'DisplayName': 'Humidity', 'Type': 'double'}
