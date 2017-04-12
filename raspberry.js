@@ -4,7 +4,7 @@
 
 var CONFIG_LEDPIN = 7; // Define led pin
 
-var BME280 = require('SpiBME280');
+var BME280 = require('./SpiBME280');
 var wpi = require('wiring-pi');
 var shell = require('shelljs');
 shell.config.silent = true;
