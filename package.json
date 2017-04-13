@@ -1,6 +1,6 @@
 {
 	"name": "azure-remote-monitoring-raspberry-pi-node",
-	"version": "0.0.2"
+	"version": "0.0.2",
 	"dependencies": {
 		"wiring-pi": "^2.2.1",
 		"shelljs": "^0.7.7",
