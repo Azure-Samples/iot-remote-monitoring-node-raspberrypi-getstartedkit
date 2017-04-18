@@ -4,7 +4,9 @@
 	"dependencies": {
 		"wiring-pi": ">=2.1.1",
 		"shelljs": "^0.7.7",
-		"azure-iot-device": "^1.0.17",
-		"azure-iot-device-mqtt": "^1.0.17"
+		"azure-iot-device": ">=1.1.9",
+		"azure-iot-device-mqtt": ">=1.1.9"
 	}
+
+
 }
