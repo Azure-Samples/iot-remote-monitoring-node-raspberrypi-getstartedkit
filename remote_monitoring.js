@@ -8,6 +8,15 @@ var Message = require('azure-iot-device').Message;
 
 var connectionString =
     'HostName=[Your IoT Hub name].azure-devices.com;DeviceId=[Your device ID];SharedAccessKey=[Your device key]';
+
+var connect = process.argv[2];
+var updateStartTime = process.argv[3];
+
+if (typeof(connect) != 'undefined') connectionString = connect;
+if (typeof(updateStartTime) == 'undefined') updateStartTime = 0;
+
+raspberry.connectionString = connectionString;
+
 var deviceId = ConnectionString.parse(connectionString).DeviceId;
 var sensorData = raspberry.getSensorData();
 var deviceTwin = null;
@@ -17,6 +26,8 @@ function printErrorFor(op) {
     if (err) console.log(op + ' error: ' + err.toString());
   };
 }
+
+
 
 var deviceMetaData = {
   'ObjectType': 'DeviceInfo',
@@ -53,7 +64,7 @@ var reportedProperties = {
         'Change light status, 0 light off, 1 light on',
     'LightBlink': 'Blink Light',
     'InitiateFirmwareUpdate--FwPackageURI-string':
-        'Updates device Firmware. Use parameter FwPackageURI to specifiy the URI of the firmware file, e.g. https://iotrmassets.blob.core.windows.net/firmwares/FW20.bin'
+        'Updates device Firmware. Use parameter FwPackageURI to specifiy the URI of the firmware file, e.g. https://raw.githubusercontent.com/radiocom/azure-remote-monitoring-raspberry-pi-node/master/raspberry-V2.js'
   },
 };
 
@@ -119,7 +130,7 @@ function onInitiateFirmwareUpdate(request, response) {
 
         var result = raspberry.updateFirmwareStep(
             deviceTwin, 1, request.payload.FwPackageURI, () => {
-              raspberry.updateFirmwareStep(deviceTwin, 2, () => {
+              raspberry.updateFirmwareStep(deviceTwin, 2, 0, () => {
                 raspberry.updateFirmwareStep(deviceTwin, 3);
               });
 
@@ -129,6 +140,7 @@ function onInitiateFirmwareUpdate(request, response) {
 }
 
 var client = Client.fromConnectionString(connectionString, Protocol);
+
 
 client.open(function(err) {
   if (err) {
@@ -184,7 +196,25 @@ client.open(function(err) {
         // Send reported properties
         twin.properties.reported.update(reportedProperties, function(err) {
           if (err) throw err;
-          console.log('twin state reported');
+          if (updateStartTime != 0) {
+            var timestamp = new Date().getTime();
+            var idle = {
+              'Method': {
+                'UpdateFirmware': {
+                  'Status': 'Complete',
+                  'LastUpdate': Date(),
+                  'Duration': (timestamp - updateStartTime) / 1000
+                }
+              },
+              'Device': {'StartupTime': Date()},
+              'System': {'FirmwareVersion': raspberry.getVersion()}
+            };
+            twin.properties.reported.update(idle, function(err) {
+              if (err) throw err;
+              console.log('twin state reported:' + JSON.stringify(idle));
+            })
+          } else
+            console.log('twin state reported');
         });
 
         // Register handlers for direct methods
