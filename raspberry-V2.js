@@ -16,7 +16,7 @@ bme.init();
 
 var raspberry = exports;
 raspberry.getVersion = function() {
-  return '1.1';
+  return '2.0';
 };
 
 
