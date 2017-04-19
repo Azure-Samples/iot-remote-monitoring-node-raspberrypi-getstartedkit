@@ -31,11 +31,8 @@ var deviceMetaData = {
   ],
 };
 
+// SupportedMethods key is a must, other kyes are just for demonstration.
 var reportedProperties = {
-  'Device': {
-    'DeviceState': 'normal',
-    'Location': {'Latitude': 47.642877, 'Longitude': -122.125497}
-  },
   'Config': {'TemperatureMeanValue': 56.7, 'TelemetryInterval': 45},
   'System': {
     'Manufacturer': 'Nodejs SDK',
