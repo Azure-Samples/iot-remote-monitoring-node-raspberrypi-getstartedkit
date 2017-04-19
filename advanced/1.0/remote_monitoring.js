@@ -64,7 +64,7 @@ var reportedProperties = {
         'Change light status, 0 light off, 1 light on',
     'LightBlink': 'Blink Light',
     'InitiateFirmwareUpdate--FwPackageURI-string':
-        'Updates device Firmware. Use parameter FwPackageURI to specifiy the URI of the firmware file, e.g. https://raw.githubusercontent.com/radiocom/azure-remote-monitoring-raspberry-pi-node/master/raspberry-V2.js'
+        'Updates device Firmware. Use parameter FwPackageURI to specifiy the URI of the firmware file, e.g. https://raw.githubusercontent.com/IoTChinaTeam/azure-remote-monitoring-raspberry-pi-node/master/advance/2.0/raspberry.js'
   },
 };
 

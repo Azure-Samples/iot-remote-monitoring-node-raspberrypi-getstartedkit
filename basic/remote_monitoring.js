@@ -6,7 +6,8 @@ var Client = require('azure-iot-device').Client;
 var ConnectionString = require('azure-iot-device').ConnectionString;
 var Message = require('azure-iot-device').Message;
 
-var connectionString = <Your connection string here:'HostName=*.azure-devices.cn;DeviceId=*;SharedAccessKey=*'>;
+var connectionString =
+    'HostName=[Your IoT Hub name].azure-devices.com;DeviceId=[Your device ID];SharedAccessKey=[Your device key]';
 var deviceId = ConnectionString.parse(connectionString).DeviceId;
 var sensorData = raspberry.getSensorData();
 
@@ -16,17 +17,16 @@ function printErrorFor(op) {
   };
 }
 
-function generateRandomIncrement() {
-  return ((Math.random() * 2) - 1);
-}
+
 
 var deviceMetaData = {
   'ObjectType': 'DeviceInfo',
   'IsSimulatedDevice': 0,
-  'Version': raspberry.getVersion(),
+  'Version': '1.0',
   'Temperature': parseInt(sensorData.temperature),
   'Humidity': parseInt(sensorData.humidity),
-  'DeviceProperties': {'DeviceID': deviceId, 'TelemetryInterval': 1},
+  'DeviceProperties':
+      {'DeviceID': deviceId, 'TelemetryInterval': 1, 'HubEnabledState': true},
   'Telemetry': [
     {'Name': 'Temperature', 'DisplayName': 'Temperature', 'Type': 'double'},
     {'Name': 'Humidity', 'DisplayName': 'Humidity', 'Type': 'double'}
@@ -54,7 +54,7 @@ var reportedProperties = {
         'Change light status, 0 light off, 1 light on',
     'LightBlink': 'Blink Light',
     'InitiateFirmwareUpdate--FwPackageURI-string':
-        'Updates device Firmware. Use parameter FwPackageURI to specifiy the URI of the firmware file, e.g. https://iotrmassets.blob.core.windows.net/firmwares/FW20.bin'
+        'Updates device Firmware. Use parameter FwPackageURI to specifiy the URI of the firmware file, e.g. https://raw.githubusercontent.com/IoTChinaTeam/azure-remote-monitoring-raspberry-pi-node/master/advance/2.0/raspberry.js'
   },
 };
 

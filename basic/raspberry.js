@@ -39,14 +39,20 @@ raspberry.lightBlink = function() {
 };
 
 
+function generateRandomIncrement() {
+  return ((Math.random() * 2) - 1);
+}
+
 raspberry.getSensorData = function() {
   var sensorJson;
   try {
-	var data = bme.readSensorData();
-    sensorJson = JSON.stringify({"temperature":data.temperature_C, "humidity":data.humidity});
+    var data = bme.readSensorData();
+    sensorJson = JSON.stringify(
+        {'temperature': data.temperature_C, 'humidity': data.humidity});
   } catch (error) {
     // Generate a default number if hardware error.
-    sensorJson = '{"Temperature":26.000,"Humidity":80.000}';
+    sensorJson = '{"Temperature":' + generateRandomIncrement() +
+        ',"Humidity":' + generateRandomIncrement() + '}';
   }
   return JSON.parse(sensorJson);
 };
@@ -80,7 +86,10 @@ raspberry.updateFirmwareStep = function(step, args) {
       break;
 
     case 3:  // Restart
-      shell.exec('sudo node happypath.js &');
+    	var cmd = 'node remote_monitoring.js > /dev/null &';
+	console.log('reboot cmd:' + cmd);
+	shell.exec(cmd, {async: true});
+	process.exit();
       return true;
       break;
   }
