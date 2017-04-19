@@ -72,10 +72,12 @@ function uploadReport(step, result, dration, next) {
       status = 'Running';
       break;
   }
-  var report = '{"Method": {"UpdateFirmware": {"' + step + '": {"Status":"' +
-      status + '", "LastUpdate": "' + Date() + '", "Duration": ' + dration +
-      '}}}}';
-  report = JSON.parse(report);
+  var report = {
+   Method: {
+	  UpdateFirmware: {}
+   }
+  };
+  report.Method.UpdateFirmware[step] = { Status: status, LastUpdate: Date(), Duration: dration };
   report.Method.UpdateFirmware.LastUpdate = Date();
   var timestamp = new Date().getTime();
   report.Method.UpdateFirmware.Duration = (timestamp - updateStart) / 1000;

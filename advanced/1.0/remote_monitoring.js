@@ -33,8 +33,6 @@ var deviceMetaData = {
   'ObjectType': 'DeviceInfo',
   'IsSimulatedDevice': 0,
   'Version': '1.0',
-  'Temperature': parseInt(sensorData.temperature),
-  'Humidity': parseInt(sensorData.humidity),
   'DeviceProperties':
       {'DeviceID': deviceId, 'TelemetryInterval': 1, 'HubEnabledState': true},
   'Telemetry': [
@@ -58,7 +56,6 @@ var reportedProperties = {
     'Processor': 'ArmV7',
     'SerialNumber': 'SER99'
   },
-  'Location': {'Latitude': 47.642877, 'Longitude': -122.125497},
   'SupportedMethods': {
     'ChangeLightStatus--LightStatusValue-int':
         'Change light status, 0 light off, 1 light on',
