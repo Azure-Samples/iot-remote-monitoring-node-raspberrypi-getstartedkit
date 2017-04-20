@@ -22,7 +22,7 @@ raspberry.getVersion = function() {
 raspberry.getDeviceInfo = function() {
   var connectionString = '';
   try {
-    var devicdInfo = shell.exec('cat deviceinfo 2>&1').stdout.split('\n');
+    var devicdInfo = shell.exec('cat ../config/deviceinfo 2>&1').stdout.split('\n');
 
     for (var i = 0; i < devicdInfo.length; ++i) {
       if (devicdInfo[i].indexOf('HostName=') == 0) {
