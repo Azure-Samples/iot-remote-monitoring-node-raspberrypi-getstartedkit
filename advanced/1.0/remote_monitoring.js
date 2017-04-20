@@ -12,7 +12,12 @@ var connectionString =
 var connect = process.argv[2];
 var updateStartTime = process.argv[3];
 
-if (typeof(connect) != 'undefined') connectionString = connect;
+var deviceInfo = raspberry.getDeviceInfo();
+connectionString = deviceInfo.ConnectionString;
+
+if (typeof(connect) !=
+    'undefined')  // Connection string in the command line has the top priority.
+  connectionString = connect;
 if (typeof(updateStartTime) == 'undefined') updateStartTime = 0;
 
 raspberry.connectionString = connectionString;

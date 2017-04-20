@@ -19,6 +19,23 @@ raspberry.getVersion = function() {
   return '1.1';
 };
 
+raspberry.getDeviceInfo = function() {
+  var connectionString = '';
+  try {
+    var devicdInfo = shell.exec('cat deviceinfo 2>&1').stdout.split('\n');
+
+    for (var i = 0; i < devicdInfo.length; ++i) {
+      if (devicdInfo[i].indexOf('HostName=') == 0) {
+        connectionString = devicdInfo[i];
+        break;
+      }
+    }
+  } catch (error) {
+  }
+  var deviceInfo = {ConnectionString: connectionString};
+  return deviceInfo;
+};
+
 
 raspberry.changeLightStatus = function(value) {
   // var status = wpi.digitalRead(CONFIG_LEDPIN);
@@ -72,12 +89,12 @@ function uploadReport(step, result, dration, next) {
       status = 'Running';
       break;
   }
-  var report = {
-   Method: {
-	  UpdateFirmware: {}
-   }
+  var report = {Method: {UpdateFirmware: {}}};
+  report.Method.UpdateFirmware[step] = {
+    Status: status,
+    LastUpdate: Date(),
+    Duration: dration
   };
-  report.Method.UpdateFirmware[step] = { Status: status, LastUpdate: Date(), Duration: dration };
   report.Method.UpdateFirmware.LastUpdate = Date();
   var timestamp = new Date().getTime();
   report.Method.UpdateFirmware.Duration = (timestamp - updateStart) / 1000;
