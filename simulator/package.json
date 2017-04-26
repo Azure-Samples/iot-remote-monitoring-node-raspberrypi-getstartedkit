@@ -1,0 +1,10 @@
+{
+	"name": "azure-remote-monitoring-raspberry-pi-node",
+	"version": "0.0.2",
+	"dependencies": {
+		"azure-iot-device": ">=1.1.9",
+		"azure-iot-device-mqtt": ">=1.1.9"
+	}
+
+
+}
