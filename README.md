@@ -1,7 +1,7 @@
 ---
 services: iot-hub, iot-suite
 platforms: nodejs ,raspberry-pi
-author: dobett
+author: dominicbetts
 ---
 
 # Connect your Microsoft Azure IoT Raspberry Pi 3 Starter Kit to the remote monitoring solution
